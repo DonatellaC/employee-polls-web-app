@@ -6,6 +6,7 @@ import Dashboard from "./Dashboard";
 import NewQuestion from "./NewQuestion";
 import Leaderboard from "./Leaderboard";
 import Nav from "./Nav";
+import Login from "./Login";
 
 const App = (props) => {
   useEffect(() => {
@@ -14,7 +15,7 @@ const App = (props) => {
   return (
     <>
       {props.authedUser === null ? (
-        <h1>Login</h1>
+        <Login />
       ) : (
         <>
           <Nav />
