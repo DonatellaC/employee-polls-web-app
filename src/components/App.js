@@ -20,7 +20,7 @@ const App = ({ authedUser, dispatch }) => {
           <Routes>
             <Route exact path="/" element={<Dashboard />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
-            <Route path="/new-question" element={<NewQuestion />} />
+            <Route path="/add" element={<NewQuestion />} />
           </Routes>
         </>
       ) : (

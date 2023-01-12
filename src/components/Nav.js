@@ -17,7 +17,7 @@ const Nav = ({ name, avatarURL, dispatch }) => {
         <Link to="/leaderboard" className="navbar-link">
           Leaderboard
         </Link>
-        <Link to="/new-question" className="navbar-link">
+        <Link to="/add" className="navbar-link">
           New Question
         </Link>
       </div>
