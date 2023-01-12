@@ -8,15 +8,13 @@ import Leaderboard from "./Leaderboard";
 import Nav from "./Nav";
 import Login from "./Login";
 
-const App = (props) => {
+const App = ({ authedUser, dispatch }) => {
   useEffect(() => {
-    props.dispatch(handleInitialData());
+    dispatch(handleInitialData());
   }, []);
   return (
     <>
-      {props.authedUser === null ? (
-        <Login />
-      ) : (
+      {authedUser ? (
         <>
           <Nav />
           <Routes>
@@ -25,6 +23,8 @@ const App = (props) => {
             <Route path="/new-question" element={<NewQuestion />} />
           </Routes>
         </>
+      ) : (
+        <Login />
       )}
     </>
   );
