@@ -5,7 +5,7 @@ import { handleInitialData } from "../actions/shared";
 import Dashboard from "./Dashboard";
 import NewQuestion from "./NewQuestion";
 import Leaderboard from "./Leaderboard";
-import Nav from "./Nav";
+import Navbar from "./Navbar";
 import Login from "./Login";
 
 const App = ({ authedUser, dispatch }) => {
@@ -16,7 +16,7 @@ const App = ({ authedUser, dispatch }) => {
     <>
       {authedUser ? (
         <>
-          <Nav />
+          <Navbar />
           <Routes>
             <Route exact path="/" element={<Dashboard />} />
             <Route path="/leaderboard" element={<Leaderboard />} />

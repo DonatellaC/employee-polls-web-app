@@ -1,26 +1,32 @@
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { setAuthedUser } from "../actions/authedUser";
+import Nav from "react-bootstrap/Nav";
 
-const Nav = ({ name, avatarURL, dispatch }) => {
+const Navbar = ({ name, avatarURL, dispatch }) => {
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(setAuthedUser(null));
   };
 
   return (
-    <nav className="navbar">
-      <div className="navbar-left">
+    <Nav className="navbar" defaultActiveKey="/" as="ul">
+      <Nav.Item>
         <Link to="/" className="navbar-link">
           Home
         </Link>
+      </Nav.Item>
+      <Nav.Item>
         <Link to="/leaderboard" className="navbar-link">
           Leaderboard
         </Link>
+      </Nav.Item>
+      <Nav.Item>
         <Link to="/add" className="navbar-link">
           New Question
         </Link>
-      </div>
+      </Nav.Item>
+
       <div className="navbar-right">
         <img src={avatarURL} alt={name} className="navbar-avatar" />
         <span className="navbar-username">{name}</span>
@@ -28,7 +34,7 @@ const Nav = ({ name, avatarURL, dispatch }) => {
           Logout
         </button>
       </div>
-    </nav>
+    </Nav>
   );
 };
 
@@ -41,4 +47,4 @@ const mapStateToProps = ({ users, authedUser }) => {
   };
 };
 
-export default connect(mapStateToProps)(Nav);
+export default connect(mapStateToProps)(Navbar);
