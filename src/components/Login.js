@@ -11,7 +11,7 @@ const Login = ({ users, dispatch }) => {
   };
 
   return (
-    <div>
+    <div className="form-container">
       <form>
         <h1>Login</h1>
         <label>Select a user:</label>
@@ -20,8 +20,8 @@ const Login = ({ users, dispatch }) => {
             const { id, avatarURL, name } = user;
 
             return (
-              <div key={id}>
-                <img src={avatarURL} alt={name} />
+              <div className="user-select" key={id}>
+                <img className="user-avatar" src={avatarURL} alt={name} />
                 <label>{name}</label>
                 <input
                   type="radio"
@@ -33,7 +33,7 @@ const Login = ({ users, dispatch }) => {
             );
           })}
         </div>
-        <button type="submit" onClick={handleSubmit}>
+        <button className="user-button" type="submit" onClick={handleSubmit}>
           Submit
         </button>
       </form>
