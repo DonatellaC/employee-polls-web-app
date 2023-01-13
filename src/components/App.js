@@ -11,7 +11,7 @@ import Login from "./Login";
 const App = ({ authedUser, dispatch }) => {
   useEffect(() => {
     dispatch(handleInitialData());
-  }, []);
+  }, [dispatch]);
   return (
     <>
       {authedUser ? (
