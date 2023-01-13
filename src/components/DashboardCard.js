@@ -1,4 +1,3 @@
-import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
@@ -27,4 +26,4 @@ const DashboardCard = ({ question }) => {
   );
 };
 
-export default connect()(DashboardCard);
+export default DashboardCard;
