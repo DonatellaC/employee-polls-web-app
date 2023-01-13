@@ -1,12 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { setAuthedUser } from "../actions/authedUser";
 import Nav from "react-bootstrap/Nav";
 
 const Navbar = ({ name, avatarURL, dispatch }) => {
+  const history = useNavigate();
+
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(setAuthedUser(null));
+    history("/");
   };
 
   return (
