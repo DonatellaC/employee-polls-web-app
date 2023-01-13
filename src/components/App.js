@@ -7,6 +7,7 @@ import NewQuestion from "./NewQuestion";
 import Leaderboard from "./Leaderboard";
 import Navbar from "./Navbar";
 import Login from "./Login";
+import PollQuestion from "./PollQuestion";
 
 const App = ({ authedUser, dispatch }) => {
   useEffect(() => {
@@ -21,6 +22,7 @@ const App = ({ authedUser, dispatch }) => {
             <Route exact path="/" element={<Dashboard />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/add" element={<NewQuestion />} />
+            <Route path="/questions/:question_id" element={<PollQuestion />} />
           </Routes>
         </>
       ) : (
