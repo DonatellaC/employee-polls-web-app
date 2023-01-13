@@ -4,12 +4,12 @@ import { setAuthedUser } from "../actions/authedUser";
 import Nav from "react-bootstrap/Nav";
 
 const Navbar = ({ name, avatarURL, dispatch }) => {
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(setAuthedUser(null));
-    history("/");
+    navigate("/");
   };
 
   return (

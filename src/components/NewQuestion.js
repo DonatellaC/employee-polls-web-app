@@ -1,12 +1,29 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { connect } from "react-redux";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { handleAddQuestion } from "../actions/questions";
 
-const NewQuestion = () => {
-  const handleSubmit = (e) => {
-    e.preventDefault();
+const NewQuestion = ({ authedUser, dispatch }) => {
+  const [optionOneText, setOptionOneText] = useState("");
+  const [optionTwoText, setOptionTwoText] = useState("");
+
+  const navigate = useNavigate();
+
+  const question = {
+    optionOneText,
+    optionTwoText,
+    author: authedUser,
   };
 
-  const handleChange = (e) => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(handleAddQuestion(question));
+    setOptionOneText("");
+    setOptionTwoText("");
+    navigate("/");
+  };
 
   return (
     <Form className="form-new-question" onSubmit={handleSubmit}>
@@ -18,8 +35,8 @@ const NewQuestion = () => {
           placeholder="Option One"
           type="text"
           name="option1"
-          //  value={}
-          onChange={handleChange}
+          value={optionOneText}
+          onChange={(e) => setOptionOneText(e.target.value)}
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="secondOption">
@@ -28,8 +45,8 @@ const NewQuestion = () => {
           placeholder="Option Two"
           type="text"
           name="option1"
-          //  value={}
-          onChange={handleChange}
+          value={optionTwoText}
+          onChange={(e) => setOptionTwoText(e.target.value)}
         />
       </Form.Group>
       <Button variant="primary" type="submit">
@@ -39,4 +56,10 @@ const NewQuestion = () => {
   );
 };
 
-export default NewQuestion;
+const mapStateToProps = ({ authedUser }) => {
+  return {
+    authedUser,
+  };
+};
+
+export default connect(mapStateToProps)(NewQuestion);

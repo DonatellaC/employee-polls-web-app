@@ -3,6 +3,7 @@ import { addQuestionToUser } from "./users";
 
 export const RECEIVE_QUESTIONS = "RECEIVE_QUESTIONS";
 export const ADD_QUESTION = "ADD_QUESTION";
+export const SAVE_QUESTION_ANSWER = "SAVE_QUESTION_ANSWER";
 
 export function receiveQuestions(questions) {
   return {
@@ -18,13 +19,20 @@ function addQuestion(question) {
   };
 }
 
-export function handleAddQuestion(optionOneText, optionTwoText, author) {
+export function handleAddQuestion(question) {
   return (dispatch) => {
-    return saveQuestion({ optionOneText, optionTwoText, author }).then(
-      (question) => {
-        dispatch(addQuestion(question));
-        dispatch(addQuestionToUser(question));
-      }
-    );
+    return saveQuestion(question).then((question) => {
+      dispatch(addQuestion(question));
+      dispatch(addQuestionToUser(question));
+    });
+  };
+}
+
+export function handleAnswer({ authedUser, qid, answer }) {
+  return {
+    type: SAVE_QUESTION_ANSWER,
+    authedUser,
+    qid,
+    answer,
   };
 }
