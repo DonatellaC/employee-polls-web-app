@@ -4,7 +4,7 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import DashboardCard from "./DashboardCard";
 
-const Dashboard = ({ users, questionsAnswered, questionsUnanswered }) => {
+const Dashboard = ({ allQuestions }) => {
   const [key, setKey] = useState("unanswered");
 
   return (
@@ -16,21 +16,13 @@ const Dashboard = ({ users, questionsAnswered, questionsUnanswered }) => {
         className="mb-3"
       >
         <Tab eventKey="unanswered" title="Unanswered polls">
-          {questionsUnanswered.map((question) => (
-            <DashboardCard
-              key={question.id}
-              question={question}
-              author={users[question.author]}
-            />
+          {allQuestions.questionsUnanswered.map((question) => (
+            <DashboardCard key={question.id} question={question} />
           ))}
         </Tab>
         <Tab eventKey="answered" title="Answered polls">
-          {questionsAnswered.map((question) => (
-            <DashboardCard
-              key={question.id}
-              question={question}
-              author={users[question.author]}
-            />
+          {allQuestions.questionsAnswered.map((question) => (
+            <DashboardCard key={question.id} question={question} />
           ))}
         </Tab>
       </Tabs>
@@ -39,23 +31,19 @@ const Dashboard = ({ users, questionsAnswered, questionsUnanswered }) => {
 };
 
 const mapStateToProps = ({ authedUser, questions, users }) => {
-  const questionAnswered = (question) =>
-    question.optionOne.votes.includes(authedUser.id) ||
-    question.optionTwo.votes.includes(authedUser.id);
-
-  const questionUnanswered = (question) =>
-    !question.optionOne.votes.includes(authedUser.id) &&
-    !question.optionTwo.votes.includes(authedUser.id);
-
-  const allQuestions = Object.values(questions).sort(
-    (a, b) => b.timestamp - a.timestamp
-  );
+  const questionsAnsweredIds = Object.keys(users[authedUser].answers);
+  const questionsAnswered = Object.values(questions)
+    .filter((question) => questionsAnsweredIds.includes(question.id))
+    .sort((a, b) => b.timestamp - a.timestamp);
+  const questionsUnanswered = Object.values(questions)
+    .filter((question) => !questionsAnsweredIds.includes(question.id))
+    .sort((a, b) => b.timestamp - a.timestamp);
 
   return {
-    authedUser,
-    questionsAnswered: allQuestions.filter(questionAnswered),
-    questionsUnanswered: allQuestions.filter(questionUnanswered),
-    users,
+    allQuestions: {
+      questionsAnswered,
+      questionsUnanswered,
+    },
   };
 };
 
