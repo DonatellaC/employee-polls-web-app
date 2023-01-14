@@ -8,6 +8,7 @@ import Leaderboard from "./Leaderboard";
 import Navbar from "./Navbar";
 import Login from "./Login";
 import PollQuestion from "./PollQuestion";
+import Page404 from "./Page404";
 
 const App = ({ authedUser, dispatch }) => {
   useEffect(() => {
@@ -15,7 +16,7 @@ const App = ({ authedUser, dispatch }) => {
   }, [dispatch]);
   return (
     <>
-      {authedUser ? (
+      {authedUser !== null ? (
         <>
           <Navbar />
           <Routes>
@@ -23,6 +24,7 @@ const App = ({ authedUser, dispatch }) => {
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/add" element={<NewQuestion />} />
             <Route path="/questions/:question_id" element={<PollQuestion />} />
+            <Route path="*" element={<Page404 />} />
           </Routes>
         </>
       ) : (
