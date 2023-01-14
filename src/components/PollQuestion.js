@@ -17,7 +17,7 @@ const PollQuestion = ({ authedUser, questions, users, dispatch }) => {
       handleAnswer({
         authedUser,
         qid: questionId,
-        // answer,
+        answer: e.target.name,
       })
     );
     navigate("/");
@@ -32,12 +32,29 @@ const PollQuestion = ({ authedUser, questions, users, dispatch }) => {
             <Image roundedCircle src={avatar} alt={question.author} />
             <Card.Text>Would you rather</Card.Text>
             <p>{question.optionOne.text}</p>
+            <div className="d-grid gap-2">
+              <Button
+                variant="primary"
+                size="lg"
+                type="submit"
+                name="optionOne"
+                onClick={handleClick}
+              >
+                Click
+              </Button>
+            </div>
             <p>{question.optionTwo.text}</p>
-          </div>
-          <div className="d-grid gap-2">
-            <Button variant="primary" size="lg" onClick={handleClick}>
-              Click
-            </Button>
+            <div className="d-grid gap-2">
+              <Button
+                variant="primary"
+                size="lg"
+                type="submit"
+                name="optionTwo"
+                onClick={handleClick}
+              >
+                Click
+              </Button>
+            </div>
           </div>
         </Card.Body>
       </Card>

@@ -2,15 +2,23 @@ import { getInitialData, saveQuestionAnswer } from "../utils/api";
 import { receiveUsers, addAnswerToUser } from "./users";
 import { receiveQuestions, handleAnswer } from "./questions";
 
-export const handleInitialData = (info) => {
+export const handleInitialData = () => {
   return async (dispatch) => {
     const { users, questions } = await getInitialData();
     dispatch(receiveUsers(users));
     dispatch(receiveQuestions(questions));
-    return await saveQuestionAnswer(info).catch((e) => {
-      dispatch(handleAnswer(info));
-      dispatch(addAnswerToUser(info));
-      console.warn("Error in handleSaveQuestionAnswer: ", e);
-    });
+  };
+};
+
+export const handleSaveAnswer = (answer) => {
+  return (dispatch) => {
+    saveQuestionAnswer(answer)
+      .then(() => {
+        dispatch(handleAnswer(answer));
+        dispatch(addAnswerToUser(answer));
+      })
+      .catch((e) => {
+        console.warn("Error in handleSaveAnswer: ", e);
+      });
   };
 };
