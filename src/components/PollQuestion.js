@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "react-bootstrap/Button";
@@ -6,10 +7,36 @@ import Image from "react-bootstrap/Image";
 import { handleAnswer } from "../actions/questions";
 
 const PollQuestion = ({ authedUser, questions, users, dispatch }) => {
+  const [answered, setAnswered] = useState(false);
   const navigate = useNavigate();
   const questionId = useParams().question_id;
   const question = questions[questionId];
   const avatar = users[question.author].avatarURL;
+  const loggedIn = users[authedUser];
+  const authedUserAnswers = loggedIn.answers;
+  const optionOneVotes = question.optionOne.votes.length;
+  const optionTwoVotes = question.optionTwo.votes.length;
+  const votesTotal = optionOneVotes + optionTwoVotes;
+
+  const calculatePercentage = (votes, total) => {
+    return Math.floor((votes / total) * 100);
+  };
+
+  const percentageOptionOne = calculatePercentage(optionOneVotes, votesTotal);
+  const percentageOptionTwo = calculatePercentage(optionTwoVotes, votesTotal);
+
+  useEffect(() => {
+    const loggedInAnswer = Object.keys(authedUserAnswers)
+      .filter((answer) => {
+        return answer === questionId;
+      })
+      .map((answer) => {
+        return authedUserAnswers[answer];
+      });
+    if (loggedInAnswer.length > 0) {
+      setAnswered(true);
+    }
+  }, [authedUser, authedUserAnswers, questionId]);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -23,6 +50,10 @@ const PollQuestion = ({ authedUser, questions, users, dispatch }) => {
     navigate("/");
   };
 
+  const handleBack = () => {
+    navigate("/");
+  };
+
   return (
     <div>
       <Card style={{ width: "18rem" }}>
@@ -31,30 +62,51 @@ const PollQuestion = ({ authedUser, questions, users, dispatch }) => {
             <Card.Title>Poll by {question.author}</Card.Title>
             <Image roundedCircle src={avatar} alt={question.author} />
             <Card.Text>Would you rather</Card.Text>
-            <p>{question.optionOne.text}</p>
-            <div className="d-grid gap-2">
-              <Button
-                variant="primary"
-                size="lg"
-                type="submit"
-                name="optionOne"
-                onClick={handleClick}
-              >
-                Click
-              </Button>
-            </div>
-            <p>{question.optionTwo.text}</p>
-            <div className="d-grid gap-2">
-              <Button
-                variant="primary"
-                size="lg"
-                type="submit"
-                name="optionTwo"
-                onClick={handleClick}
-              >
-                Click
-              </Button>
-            </div>
+            {!answered && (
+              <div>
+                <p className="poll-question">{question.optionOne.text}</p>
+                <div className="d-grid gap-2">
+                  <Button
+                    variant="primary"
+                    size="lg"
+                    type="submit"
+                    name="optionOne"
+                    onClick={handleClick}
+                  >
+                    Click
+                  </Button>
+                </div>
+                <p className="poll-question">{question.optionTwo.text}</p>
+                <div className="d-grid gap-2">
+                  <Button
+                    variant="primary"
+                    size="lg"
+                    type="submit"
+                    name="optionTwo"
+                    onClick={handleClick}
+                  >
+                    Click
+                  </Button>
+                </div>
+              </div>
+            )}
+            {answered && (
+              <div>
+                <div>
+                  <p className="poll-question">{question.optionOne.text}</p>
+                  <p>
+                    People who voted: {optionOneVotes} - {percentageOptionOne} %
+                  </p>
+                </div>
+                <div>
+                  <p className="poll-question">{question.optionTwo.text}</p>
+                  <p>
+                    People who voted:{optionTwoVotes} - {percentageOptionTwo} %
+                  </p>
+                </div>
+                <Button onClick={handleBack}>Go Back to Home</Button>
+              </div>
+            )}
           </div>
         </Card.Body>
       </Card>

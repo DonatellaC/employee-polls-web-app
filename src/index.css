@@ -106,3 +106,9 @@ input[type="radio"] {
 .leaderboard-avatar {
   width: 50px;
 }
+
+/* PollQuestion */
+
+.poll-question {
+  font-weight: bold;
+}
