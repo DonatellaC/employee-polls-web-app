@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import { handleAnswer } from "../actions/questions";
+import { handleSaveQuestionAnswer } from "../actions/users";
 
 const PollQuestion = ({ authedUser, questions, users, dispatch }) => {
   const [answered, setAnswered] = useState(false);
@@ -42,6 +43,13 @@ const PollQuestion = ({ authedUser, questions, users, dispatch }) => {
     e.preventDefault();
     dispatch(
       handleAnswer({
+        authedUser,
+        qid: questionId,
+        answer: e.target.name,
+      })
+    );
+    dispatch(
+      handleSaveQuestionAnswer({
         authedUser,
         qid: questionId,
         answer: e.target.name,
