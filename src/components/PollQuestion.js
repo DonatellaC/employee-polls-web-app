@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
+import ProgressBar from "react-bootstrap/ProgressBar";
 import { handleAnswer } from "../actions/questions";
 import { handleSaveQuestionAnswer } from "../actions/users";
 
@@ -102,15 +103,19 @@ const PollQuestion = ({ authedUser, questions, users, dispatch }) => {
               <div>
                 <div>
                   <p className="poll-question">{question.optionOne.text}</p>
-                  <p>
-                    People who voted: {optionOneVotes} - {percentageOptionOne} %
-                  </p>
+                  <ProgressBar
+                    now={percentageOptionOne}
+                    label={`${percentageOptionOne}%`}
+                  />
+                  <p>People who voted: {optionOneVotes}</p>
                 </div>
                 <div>
                   <p className="poll-question">{question.optionTwo.text}</p>
-                  <p>
-                    People who voted:{optionTwoVotes} - {percentageOptionTwo} %
-                  </p>
+                  <ProgressBar
+                    now={percentageOptionOne}
+                    label={`${percentageOptionTwo}%`}
+                  />
+                  <p>People who voted:{optionTwoVotes}</p>
                 </div>
                 <Button onClick={handleBack}>Go Back to Home</Button>
               </div>
