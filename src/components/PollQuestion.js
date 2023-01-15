@@ -19,6 +19,7 @@ const PollQuestion = ({ authedUser, questions, users, dispatch }) => {
   const optionOneVotes = question.optionOne.votes.length;
   const optionTwoVotes = question.optionTwo.votes.length;
   const votesTotal = optionOneVotes + optionTwoVotes;
+  const optionSelectedByUser = users[authedUser].answers[question.id];
 
   const calculatePercentage = (votes, total) => {
     return Math.floor((votes / total) * 100);
@@ -102,6 +103,9 @@ const PollQuestion = ({ authedUser, questions, users, dispatch }) => {
             {answered && (
               <div>
                 <div>
+                  {optionSelectedByUser === "optionOne" && (
+                    <span>You voted for: </span>
+                  )}
                   <p className="poll-question">{question.optionOne.text}</p>
                   <ProgressBar
                     now={percentageOptionOne}
@@ -110,6 +114,9 @@ const PollQuestion = ({ authedUser, questions, users, dispatch }) => {
                   <p>People who voted: {optionOneVotes}</p>
                 </div>
                 <div>
+                  {optionSelectedByUser === "optionTwo" && (
+                    <span>You voted for: </span>
+                  )}
                   <p className="poll-question">{question.optionTwo.text}</p>
                   <ProgressBar
                     now={percentageOptionOne}
