@@ -24,6 +24,7 @@ const App = ({ authedUser, dispatch }) => {
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/add" element={<NewQuestion />} />
             <Route path="/questions/:question_id" element={<PollQuestion />} />
+            <Route path="/404" exact element={<Page404 />} />
             <Route path="*" element={<Page404 />} />
           </Routes>
         </>

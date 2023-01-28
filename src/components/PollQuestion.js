@@ -13,13 +13,13 @@ const PollQuestion = ({ authedUser, questions, users, dispatch }) => {
   const navigate = useNavigate();
   const questionId = useParams().question_id;
   const question = questions[questionId];
-  const avatar = users[question.author].avatarURL;
+  const avatar = users[question?.author]?.avatarURL;
   const loggedIn = users[authedUser];
   const authedUserAnswers = loggedIn.answers;
-  const optionOneVotes = question.optionOne.votes.length;
-  const optionTwoVotes = question.optionTwo.votes.length;
+  const optionOneVotes = question?.optionOne.votes.length;
+  const optionTwoVotes = question?.optionTwo.votes.length;
   const votesTotal = optionOneVotes + optionTwoVotes;
-  const optionSelectedByUser = users[authedUser].answers[question.id];
+  const optionSelectedByUser = users[authedUser].answers[question?.id];
 
   const calculatePercentage = (votes, total) => {
     return Math.floor((votes / total) * 100);
@@ -40,6 +40,12 @@ const PollQuestion = ({ authedUser, questions, users, dispatch }) => {
       setAnswered(true);
     }
   }, [authedUser, authedUserAnswers, questionId]);
+
+  useEffect(() => {
+    if (question === undefined) {
+      navigate("/404");
+    }
+  }, [navigate, question]);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -69,12 +75,12 @@ const PollQuestion = ({ authedUser, questions, users, dispatch }) => {
       <Card style={{ width: "18rem" }}>
         <Card.Body>
           <div className="text-center">
-            <Card.Title>Poll by {question.author}</Card.Title>
-            <Image roundedCircle src={avatar} alt={question.author} />
+            <Card.Title>Poll by {question?.author}</Card.Title>
+            <Image roundedCircle src={avatar} alt={question?.author} />
             <Card.Text>Would you rather</Card.Text>
             {!answered && (
               <div>
-                <p className="poll-question">{question.optionOne.text}</p>
+                <p className="poll-question">{question?.optionOne.text}</p>
                 <div className="d-grid gap-2">
                   <Button
                     variant="primary"
@@ -86,7 +92,7 @@ const PollQuestion = ({ authedUser, questions, users, dispatch }) => {
                     Click
                   </Button>
                 </div>
-                <p className="poll-question">{question.optionTwo.text}</p>
+                <p className="poll-question">{question?.optionTwo.text}</p>
                 <div className="d-grid gap-2">
                   <Button
                     variant="primary"
@@ -106,7 +112,7 @@ const PollQuestion = ({ authedUser, questions, users, dispatch }) => {
                   {optionSelectedByUser === "optionOne" && (
                     <span>You voted for: </span>
                   )}
-                  <p className="poll-question">{question.optionOne.text}</p>
+                  <p className="poll-question">{question?.optionOne.text}</p>
                   <ProgressBar
                     now={percentageOptionOne}
                     label={`${percentageOptionOne}%`}
@@ -117,7 +123,7 @@ const PollQuestion = ({ authedUser, questions, users, dispatch }) => {
                   {optionSelectedByUser === "optionTwo" && (
                     <span>You voted for: </span>
                   )}
-                  <p className="poll-question">{question.optionTwo.text}</p>
+                  <p className="poll-question">{question?.optionTwo.text}</p>
                   <ProgressBar
                     now={percentageOptionOne}
                     label={`${percentageOptionTwo}%`}

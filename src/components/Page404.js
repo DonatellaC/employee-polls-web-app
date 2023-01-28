@@ -11,9 +11,9 @@ const Page404 = () => {
   return (
     <div>
       <h1>404 Error Page</h1>
-      <p>The poll does not exist</p>
+      <p>The poage does not exist</p>
       <Button variant="danger" type="submit" onClick={handleClick}>
-        Please Login
+        Go to Home
       </Button>
     </div>
   );
