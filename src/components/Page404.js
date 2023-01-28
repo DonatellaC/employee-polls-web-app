@@ -11,7 +11,7 @@ const Page404 = () => {
   return (
     <div>
       <h1>404 Error Page</h1>
-      <p>The poage does not exist</p>
+      <p>The page does not exist</p>
       <Button variant="danger" type="submit" onClick={handleClick}>
         Go to Home
       </Button>
